@@ -14,7 +14,6 @@ class AbstractLanguageModel(ABC):
 
 class CustomLanguageModel(AbstractLanguageModel):
     def __init__(self, model):
-        self.model = model
 
     def generate_thoughts(self, state, k):
         #implement the thought generation logic using self.model
@@ -116,7 +115,6 @@ class TreeofThoughts:
     1. Thought Decomposition --> based on problem properties
 
     2. Thought Generator -> create a thought generator function G(p0, s, k) with 2 strategies a sample iid thoughts from a cot prompt b. propose thoughts
-    sequentially using a propose prompt
 
     3. create a state evaluator function V(p0, S) with 2 strategies a value each state independently b. vote across states
 
@@ -169,7 +167,6 @@ class TreeofThoughts:
 
         def dfs(s, t):
             if t > T:
-                output.append(self.model.generate_thoughts(s, 1))
                 return
             for s_prime in sorted(self.model.generate_thoughts(s, k)):
                 if self.model.evaluate_states({s_prime})[s_prime] > vth:
